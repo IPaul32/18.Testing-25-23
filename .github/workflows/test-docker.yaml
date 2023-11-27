@@ -29,7 +29,6 @@ jobs:
         run: docker build -t python-game-image .
 
       - name: Run tests
-        id: tests
         run: |
           docker run --name python-game-container python-game-image
           docker exec python-game-container entrypoint
@@ -44,31 +43,31 @@ jobs:
           docker exec python-game-container su -
 
       - name: Upload test results
-        if: steps.tests.outcome == 'success'
+        if: success()
         uses: actions/upload-artifact@v3
         with:
           name: test-results
           path: test-results.txt
 
       - name: Slack Notification on Success
-        if: steps.root.outcome == 'success'
+        if: success()
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: github_action
-          SLACK_COLOR: #006400
-          SLACK_ICON: https://github.com/rtCamp.png?size=48
+          SLACK_COLOR: '#006400'
+          SLACK_ICON: 'https://github.com/rtCamp.png?size=48'
           SLACK_MESSAGE: 'Python game docker tested successfully!'
           SLACK_TITLE: 'SUCCESS! No root access inside the container.'
           SLACK_USERNAME: rtCamp
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
       - name: Slack Notification on Failure
-        if: steps.root.outcome == 'failure'
+        if: failure()
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: github_action
-          SLACK_COLOR: #8B0000
-          SLACK_ICON: https://github.com/rtCamp.png?size=48
+          SLACK_COLOR: '#8B0000'
+          SLACK_ICON: 'https://github.com/rtCamp.png?size=48'
           SLACK_MESSAGE: 'Failure test python docker game'
           SLACK_TITLE: 'FAILURE! User is ROOT inside the container!'
           SLACK_USERNAME: rtCamp
