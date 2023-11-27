@@ -17,6 +17,6 @@ RUN useradd -ms /bin/bash gumcol
 
 COPY --from=builder /python-game/entrypoint.sh /usr/local/bin/entrypoint
 
-ENTRYPOINT ["py-game"]
+ENTRYPOINT ["entrypoint"]
 
 USER gumcol
