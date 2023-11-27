@@ -13,7 +13,7 @@ FROM python:3.9-slim
 
 WORKDIR /python-game
 
-RUN useradd -ms /bin/bash test
+RUN useradd -ms /bin/bash gumcol
 
 COPY --from=builder /python-game/entrypoint.sh /usr/local/bin/entrypoint
 
