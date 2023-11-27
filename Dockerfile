@@ -6,15 +6,12 @@ WORKDIR /python-game
 
 COPY app/app.py .
 
-RUN echo -e "#!/bin/bash\npython /python-game/app.py" > /python-game/entrypoint.sh && \
-    chmod +x /python-game/entrypoint.sh
-
+RUN echo -e "#!/bin/bash\npython /python-game/app.py" > entrypoint.sh && \
+    chmod +x entrypoint.sh
 
 FROM python:3.9
 
 WORKDIR /python-game
-
-RUN useradd -ms /bin/bash gumcol
 
 COPY --from=builder --chown=gumcol:gumcol /python-game/entrypoint.sh /usr/local/bin/entrypoint
 
