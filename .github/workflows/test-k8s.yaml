@@ -27,7 +27,7 @@ jobs:
           tar xvf kubeval-linux-amd64.tar.gz
           sudo mv kubeval /usr/local/bin/
 
-  kubeval:
+ kubeval:
     needs: k8s-test
     runs-on: ubuntu-latest
 
