@@ -26,9 +26,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '14'
+     
       - name: Install kubeval
         run: |
-          npm install -g kubeval
+          curl -LO https://github.com/instrumenta/kubeval/releases/download/v0.16.1/kubeval-linux-amd64.tar.gz
+          tar xf kubeval-linux-amd64.tar.gz
+          sudo mv kubeval /usr/local/bin/
 
       - name: Validate Kubernetes manifests using kubeval
         run: |
