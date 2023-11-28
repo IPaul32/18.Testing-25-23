@@ -26,21 +26,23 @@ jobs:
           failure-threshold: error
 
       - name: Build Docker Image
-        run: docker build -t python-game-image .
-
-      - name: Run tests
-        run: |
-          docker run --name python-game-container python-game-image
-          docker exec python-game-container entrypoint
-          docker exec python-game-container python /python-game/app.py > test-results.txt
-          docker stop python-game-container
+        run: docker build -t gumcol-site-image .
 
       - name: Check no-root inside
         id: root
         continue-on-error: true
         run: |
-          docker exec python-game-container whoami
-          docker exec python-game-container su -
+          docker run --name gumcol-site-container -d -p 8080:80 gumcol-site-image
+          sleep 10
+          curl -I http://localhost:8080 >> test-results.txt
+     
+      - name: Check no-root inside
+        id: root
+        continue-on-error: true
+        run: |
+          docker ps >> test-results.txt
+          docker exec spring whoami >> test-results.txt
+          docker exec spring su - >> test-results.txt
 
       - name: Upload test results
         if: success()
