@@ -17,7 +17,9 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Install Dependencies
-        run: npm install
+        run: |
+          sudo apt update && sudo apt install -y curl
+          npm install
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -28,14 +30,12 @@ jobs:
           dockerfile: Dockerfile
           failure-threshold: error
 
-      - name: Build Docker Image
-        run: docker build -t gumcol-site-image .
-
       - name: Run tests
         run: |
-          docker run --name gumcol-site-container -d -p 8080:80 gumcol-site-image
+          docker build --network=host -t gumcol-site-container .
+          docker run -d --name gumcol-site-container -p 8080:8080 -t gumcol-site-container:v.1.0
           sleep 30
-          docker logs gumcol-site-container
+          docker logs gumcol-site-container >> test-results.txt
           curl --request GET --url http://localhost:8080/site/page32002363.html >> test-results.txt
 
       - name: Check container info
