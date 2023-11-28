@@ -23,14 +23,12 @@ jobs:
         id: install
 
       - name: Download kubeval
-        uses: actions/download-artifact@v3
+        uses: actions/setup-node@v3
         with:
-          name: kubeval
-          path: /usr/local/bin
-
+          node-version: '14'
       - name: Install kubeval
         run: |
-          chmod +x /usr/local/bin/kubeval
+          npm install -g kubeval
 
       - name: Validate Kubernetes manifests using kubeval
         run: |
