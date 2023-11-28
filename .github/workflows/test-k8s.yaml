@@ -19,7 +19,7 @@ jobs:
       - name: Install Kubernetes CLI
         uses: azure/setup-kubectl@v3
         with:
-          version: default
+          version: '<version>'
           id: install
 
       - name: Download and Install kubeval
