@@ -28,21 +28,19 @@ jobs:
       - name: Build Docker Image
         run: docker build -t gumcol-site-image .
 
-      - name: Check no-root inside
-        id: root
-        continue-on-error: true
+      - name: Run tests
         run: |
           docker run --name gumcol-site-container -d -p 8080:80 gumcol-site-image
           sleep 10
           curl -I http://localhost:8080 >> test-results.txt
-     
-      - name: Check no-root inside
-        id: root
+
+      - name: Check container info
+        id: container_info
         continue-on-error: true
         run: |
           docker ps >> test-results.txt
-          docker exec spring whoami >> test-results.txt
-          docker exec spring su - >> test-results.txt
+          docker exec gumcol-site-container whoami >> test-results.txt
+          docker exec gumcol-site-container su - >> test-results.txt
 
       - name: Upload test results
         if: success()
@@ -58,7 +56,7 @@ jobs:
           SLACK_CHANNEL: github_action
           SLACK_COLOR: '#006400'
           SLACK_ICON: 'https://github.com/rtCamp.png?size=48'
-          SLACK_MESSAGE: 'Python game docker tested successfully!'
+          SLACK_MESSAGE: 'Docker image tested successfully!'
           SLACK_TITLE: 'SUCCESS! No root access inside the container.'
           SLACK_USERNAME: rtCamp
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
@@ -70,7 +68,7 @@ jobs:
           SLACK_CHANNEL: github_action
           SLACK_COLOR: '#8B0000'
           SLACK_ICON: 'https://github.com/rtCamp.png?size=48'
-          SLACK_MESSAGE: 'Failure test python docker game'
+          SLACK_MESSAGE: 'Failure testing Docker image'
           SLACK_TITLE: 'FAILURE! User is ROOT inside the container!'
           SLACK_USERNAME: rtCamp
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
