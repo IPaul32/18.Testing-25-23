@@ -22,15 +22,19 @@ jobs:
           version: v1.15.0
         id: install
 
-      - name: Download and Install kubeval
+      - name: Download kubeval
         uses: actions/download-artifact@v3
         with:
           name: kubeval
           path: /usr/local/bin
-          
+
+      - name: Install kubeval
+        run: |
+          chmod +x /usr/local/bin/kubeval
+
       - name: Validate Kubernetes manifests using kubeval
         run: |
-          kubeval manifests/ -d
+          kubeval manifests/
 
   upload-results:
     needs: k8s-test
