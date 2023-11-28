@@ -35,8 +35,9 @@ jobs:
 
       - name: Validate Kubernetes manifests using kubeval
         run: |
-          ls -la ./manifests
-          kubeval ./manifests
+          cd ./manifests
+          kubeval .
+        id: kubeval
 
   upload-results:
     needs: k8s-test
