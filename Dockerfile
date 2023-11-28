@@ -1,15 +1,12 @@
-FROM alpine
+FROM node:14-alpine
 
 WORKDIR /gumcol_site
 
 COPY site-config.js .
-COPY site/page32002363.html .
+COPY site/page32002363.html ./site
 COPY package.json .
 
-RUN apk update \
-    && apk add --no-cache nodejs npm \
-    && rm -rf /var/cache/apk/* \
-    && npm install
+RUN npm install
 
 CMD ["npm", "start"]
 

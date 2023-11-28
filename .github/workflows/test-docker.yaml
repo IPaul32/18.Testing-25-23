@@ -17,8 +17,7 @@ jobs:
         uses: actions/checkout@v4.1.1
 
       - name: Install Dependencies
-        run: |
-          npm install
+        run: npm install
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -37,7 +36,7 @@ jobs:
           docker run --name gumcol-site-container -d -p 8080:80 gumcol-site-image
           sleep 30
           docker logs gumcol-site-container
-          curl -I http://localhost:8080 >> test-results.txt
+          curl -I http://localhost:8080/site/page32002363.html >> test-results.txt
 
       - name: Check container info
         id: container_info
