@@ -36,7 +36,7 @@ jobs:
           docker run --name gumcol-site-container -d -p 8080:80 gumcol-site-image
           sleep 30
           docker logs gumcol-site-container
-          curl -I http://localhost:8080/site/page32002363.html >> test-results.txt
+          curl --request GET --url http://localhost:8080/site/page32002363.html >> test-results.txt
 
       - name: Check container info
         id: container_info
