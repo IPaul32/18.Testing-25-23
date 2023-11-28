@@ -31,7 +31,7 @@ jobs:
       - name: Run tests
         run: |
           docker run --name gumcol-site-container -d -p 8080:80 gumcol-site-image
-          sleep 10
+          sleep 20
           curl -I http://localhost:8080 >> test-results.txt
 
       - name: Check container info
