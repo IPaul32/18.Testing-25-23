@@ -30,7 +30,7 @@ jobs:
           dockerfile: Dockerfile
           failure-threshold: error
 
-      - name: Run tests
+      - name: Check data
         run: |
           docker build --network=host -t gumcol-site-container:v.1.0 .
           docker run -d --name gumcol-site-container -p 8080:8080 -t gumcol-site-container:v.1.0
@@ -38,13 +38,17 @@ jobs:
           docker logs gumcol-site-container >> test-results.txt
           curl --request GET --url http://localhost:8080/site/page32002363.html >> test-results.txt
 
-      - name: Check container info
-        id: container_info
+      - name: Check user or root
+        id: userorroot
         continue-on-error: true
         run: |
           docker ps >> test-results.txt
           docker exec gumcol-site-container whoami >> test-results.txt
           docker exec gumcol-site-container su - >> test-results.txt
+
+      - name: Warning if user is root
+        if: ${{ steps.userorroot.outputs.user == 'root' }}
+        run: echo "Image user is ${{ steps.userorroot.outputs.user }} \n >> This is root user <<<" >> test-results.txt
 
       - name: Upload test results
         if: success()

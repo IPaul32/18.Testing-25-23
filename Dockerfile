@@ -1,12 +1,19 @@
-FROM node:14-alpine
+FROM alpine
 
 WORKDIR /gumcol_site
+
+RUN adduser -D gumcol
 
 COPY site-config.js .
 COPY site/page32002363.html ./site
 COPY package.json .
 
-RUN npm install
+RUN apk update \
+    && apk add --no-cache nodejs npm \
+    && rm -rf /var/cache/apk/* \
+    && npm install
+
+USER gumcol
 
 CMD ["npm", "start"]
 
