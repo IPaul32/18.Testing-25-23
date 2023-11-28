@@ -61,7 +61,7 @@ jobs:
           SLACK_COLOR: '#006400'
           SLACK_ICON: 'https://github.com/rtCamp.png?size=48'
           SLACK_MESSAGE: 'Docker image tested successfully!'
-          SLACK_TITLE: 'SUCCESS! No root access inside the container.'
+          SLACK_TITLE: 'SUCCESS! All tests is successfylly checked!'
           SLACK_USERNAME: rtCamp
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
 
@@ -73,6 +73,6 @@ jobs:
           SLACK_COLOR: '#8B0000'
           SLACK_ICON: 'https://github.com/rtCamp.png?size=48'
           SLACK_MESSAGE: 'Failure testing Docker image'
-          SLACK_TITLE: 'FAILURE! User is ROOT inside the container!'
+          SLACK_TITLE: 'FAILURE! Test is passed!'
           SLACK_USERNAME: rtCamp
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
