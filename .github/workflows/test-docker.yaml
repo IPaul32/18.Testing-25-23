@@ -44,10 +44,10 @@ jobs:
         run: |
           docker ps >> test-results.txt
           docker exec gumcol-site-container whoami >> test-results.txt
-          docker exec gumcol-site-container su - >> test-results.txt
+          docker exec gumcol-site-container id >> test-results.txt
 
       - name: Warning if user is root
-        if: ${{ steps.userorroot.outputs.user == 'root' }}
+        if: ${{ steps.userorroot.outputs.user == 'uid=0(root)' }}
         run: echo "Image user is ${{ steps.userorroot.outputs.user }} \n >> This is root user <<<" >> test-results.txt
 
       - name: Upload test results
