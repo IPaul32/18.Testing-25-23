@@ -5,7 +5,7 @@ const path = require('path');
 const port = process.env.PORT || 8080; 
 
 const server = http.createServer((req, res) => {
-  const filePath = path.join(__dirname, 'site', req.url);
+  const filePath = path.join(__dirname,'site', req.url);
   fs.readFile(filePath, (err, data) => {
     if (err) {
       res.writeHead(404, { 'Content-Type': 'text/html' });
