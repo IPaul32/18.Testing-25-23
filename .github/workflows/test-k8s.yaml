@@ -19,8 +19,8 @@ jobs:
       - name: Install Kubernetes CLI
         uses: azure/setup-kubectl@v3
         with:
-          version: '<version>'
-          id: install
+          version: '<default>'
+        id: install
 
       - name: Download and Install kubeval
         uses: actions/download-artifact@v2
