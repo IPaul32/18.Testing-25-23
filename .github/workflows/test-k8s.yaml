@@ -23,7 +23,7 @@ jobs:
         id: install
 
       - name: Download and Install kubeval
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: kubeval
           path: /usr/local/bin
