@@ -43,7 +43,7 @@ jobs:
           echo "$FILES" | xargs kubeval --ignore-missing-schemas
         
   notification:
-    needs: upload-results
+    needs: k8s-test
     runs-on: ubuntu-latest
 
     steps:
