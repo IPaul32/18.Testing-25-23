@@ -34,7 +34,7 @@ jobs:
           sudo mv kubeval /usr/local/bin/
 
       - name: Validate Kubernetes manifests using kubeval
-        run |
+        run: |
           FILES="$(find ./manifests -name '*.yaml' -or -name '*.yml' -type f)"
           if [ -z "$FILES" ]; then
             echo "No manifest files found"
