@@ -41,7 +41,7 @@ jobs:
             exit 1
           fi
           kubeval --ignore-missing-schemas $FILES > kubeval-results.txt
-       shell: /usr/bin/bash -e {0}
+        shell: /usr/bin/bash -e {0}
         
   upload-results:
     needs: k8s-test
