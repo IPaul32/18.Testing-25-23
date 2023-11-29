@@ -40,20 +40,8 @@ jobs:
             echo "No manifest files found"
             exit 1
           fi
-          kubeval --ignore-missing-schemas $FILES > kubeval-results.txt 2>&1
-        shell: /usr/bin/bash -e {0}
+          echo "$FILES" | xargs kubeval --ignore-missing-schemas
         
-  upload-results:
-    needs: k8s-test
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Upload test results
-        uses: actions/upload-artifact@v2
-        with:
-          name: kube-results
-          path: kubeval-results.txt
-
   notification:
     needs: upload-results
     runs-on: ubuntu-latest
