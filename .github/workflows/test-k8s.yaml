@@ -41,6 +41,7 @@ jobs:
             exit 1
           fi
           echo "$FILES" | xargs kubeval --ignore-missing-schemas > kubeval-results.txt
+          cat kubeval-results.txt
 
   upload-results:
     needs: k8s-test
