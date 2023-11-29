@@ -34,10 +34,13 @@ jobs:
           sudo mv kubeval /usr/local/bin/
 
       - name: Validate Kubernetes manifests using kubeval
-        run: |
-          ls -la
-          /usr/bin/kubeval ./manifests
-        working-directory: ${{ github.workspace }}
+        run |
+          FILES="$(find ./manifests -name '*.yaml' -or -name '*.yml' -type f)"
+          if [ -z "$FILES" ]; then
+            echo "No manifest files found"
+            exit 1
+          fi
+          echo "$FILES" | xargs kubeval
 
   upload-results:
     needs: k8s-test
