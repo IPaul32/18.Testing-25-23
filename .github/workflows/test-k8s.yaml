@@ -40,7 +40,7 @@ jobs:
             echo "No manifest files found"
             exit 1
           fi
-          echo "$FILES" | xargs kubeval --ignore-missing-schemas --output-file kubeval-results.txt
+          echo "$FILES" | xargs kubeval --ignore-missing-schemas > kubeval-results.txt
 
   upload-results:
     needs: k8s-test
