@@ -35,7 +35,7 @@ jobs:
 
       - name: Validate Kubernetes manifests using kubeval
         run: kubeval ./manifests
-        working-directory: ${{ github.workspace }}
+        working-directory: ${{ github.workspace }}/manifests
 
   upload-results:
     needs: k8s-test
