@@ -34,8 +34,10 @@ jobs:
           sudo mv kubeval /usr/local/bin/
 
       - name: Validate Kubernetes manifests using kubeval
-        run: kubeval ./manifests
-        working-directory: ${{ github.workspace }}/manifests
+        run: |
+          ls -la
+          /usr/bin/kubeval ./manifests
+        working-directory: ${{ github.workspace }}
 
   upload-results:
     needs: k8s-test
